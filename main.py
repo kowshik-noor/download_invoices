@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 # email reading libraries
 import poplib
-import string, random
+# import string, random
 from io import StringIO
 import email
 import logging
@@ -46,11 +46,12 @@ logging.debug('listing emails')
 resp, items, octets = server.list()
 
 # get the first email in the list
-id, size = string.split(items[0])
-resp, text, octets = server.retr(id)
+id, size = items[0].split()
+resp, text, octets = server.retr(int(id))
 
 # convert the list to a Message object
-text = string.join(text, "\n")
+# print(text)
+text = b"\n".join(text) #text.join("\n")
 file = StringIO.StringIO(text)
 message = email.Message(file)
 
