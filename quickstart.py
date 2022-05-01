@@ -11,6 +11,7 @@ from googleapiclient.errors import HttpError
 from pprint import pprint
 import email
 import base64
+from bs4 import BeautifulSoup
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
@@ -52,7 +53,8 @@ def main():
         if content_types == 'multipart':
             # part 1 is plain text, part 2 is html text
             part1, part2 = message_str.get_payload()
-            print(part2.get_payload())
+            soup = BeautifulSoup(part2.get_payload(), 'lxml') # we get an html string
+            print(soup.a.text)
         else:
             print(message_str.get_payload())
 
