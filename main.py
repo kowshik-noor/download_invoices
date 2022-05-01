@@ -3,6 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+# gmail program
+from quickstart import main
 # loading from the .env file
 import os
 from dotenv import load_dotenv
