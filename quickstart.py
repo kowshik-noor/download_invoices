@@ -41,13 +41,20 @@ def main():
     try:
         # Call the Gmail API
         service = build('gmail', 'v1', credentials=creds)
-        results = service.users().messages().get(userId='me', id='1807b99cf3ce5cd3', format='full', metadataHeaders='none').execute()
-        message = results['payload']['parts'][1]['body']['data']
-        # print(base64.urlsafe_b64decode(message.encode('ASCII')))
-        print(type(message))
-        # message_str = email.message_from_bytes(message)
-        # print(message_str)
+        results = service.users().messages().get(userId='me', id='1807b99cf3ce5cd3', format='raw').execute()
+        message = results['raw']
+        message_raw = base64.urlsafe_b64decode(message.encode('ASCII'))
+        # print(type(message_raw))
+        message_str = email.message_from_bytes(message_raw)
 
+        content_types = message_str.get_content_maintype()
+
+        if content_types == 'multipart':
+            # part 1 is plain text, part 2 is html text
+            part1, part2 = message_str.get_payload()
+            print(part2.get_payload())
+        else:
+            print(message_str.get_payload())
 
     except HttpError as error:
         # TODO(developer) - Handle errors from gmail API.
