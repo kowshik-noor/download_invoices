@@ -42,7 +42,11 @@ def main():
     try:
         # Call the Gmail API
         service = build('gmail', 'v1', credentials=creds)
-        results = service.users().messages().get(userId='me', id='1807b99cf3ce5cd3', format='raw').execute()
+
+        recent_emails = service.users().messages().list(userId='me', maxResults=3).execute()
+        email_id = recent_emails['messages'][0]['id']
+
+        results = service.users().messages().get(userId='me', id=email_id, format='raw').execute()
         message = results['raw']
         message_raw = base64.urlsafe_b64decode(message.encode('ASCII'))
         # print(type(message_raw))
