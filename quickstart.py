@@ -42,8 +42,8 @@ def main():
     try:
         # Call the Gmail API
         service = build('gmail', 'v1', credentials=creds)
-        results = service.users().messages().get(userId='me', id='1807b99cf3ce5cd3', format='full', metadataHeaders='none').execute()
-        message = results['payload']['parts'][1]['body']['data']
+        results = service.users().messages().get(userId='me', id='1807b99cf3ce5cd3', format='raw').execute()
+        message = results['raw']
         print(base64.urlsafe_b64decode(message.encode('ASCII')))
 
     except HttpError as error:
