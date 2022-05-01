@@ -10,7 +10,6 @@ from googleapiclient.errors import HttpError
 
 from pprint import pprint
 import email
-import quopri
 import base64
 
 # If modifying these scopes, delete the file token.json.
@@ -44,7 +43,18 @@ def main():
         service = build('gmail', 'v1', credentials=creds)
         results = service.users().messages().get(userId='me', id='1807b99cf3ce5cd3', format='raw').execute()
         message = results['raw']
-        print(base64.urlsafe_b64decode(message.encode('ASCII')))
+        message_raw = base64.urlsafe_b64decode(message.encode('ASCII'))
+        # print(type(message_raw))
+        message_str = email.message_from_bytes(message_raw)
+
+        content_types = message_str.get_content_maintype()
+
+        if content_types == 'multipart':
+            # part 1 is plain text, part 2 is html text
+            part1, part2 = message_str.get_payload()
+            print(part2.get_payload())
+        else:
+            print(message_str.get_payload())
 
     except HttpError as error:
         # TODO(developer) - Handle errors from gmail API.
