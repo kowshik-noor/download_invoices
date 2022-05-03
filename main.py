@@ -47,6 +47,7 @@ def login():
 
     # go to the login link that will take us to the account page
     driver.get(os.getenv('LINK'))
+    driver.implicitly_wait(5)
     return driver
 
 driver = login()
