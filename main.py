@@ -10,15 +10,17 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-# get the chromedriver running \
-# service = Service(executable_path=os.getenv('LOCATION'))
-# driver = webdriver.Chrome(service=service)
+# get the chromedriver running 
+service = Service(executable_path=os.getenv('LOCATION'))
+driver = webdriver.Chrome(service=service)
 
-# # go to the link to get the invoices
-# driver.get(os.getenv('LINK'))
-# driver.implicitly_wait(5)
+# go to the link to get the invoices
+driver.get(os.getenv('LINK'))
+driver.implicitly_wait(5)
 
-# # enter my email
-# email = driver.find_element(By.ID, 'email')
-# email.send_keys(os.getenv('EMAIL'), Keys.ENTER)
+# enter my email
+email = driver.find_element(By.ID, 'email')
+email.send_keys(os.getenv('EMAIL'), Keys.ENTER)
 # after pressing enter, a login link will be sent to my email
+
+# after a minute, run the email scraping function in quickstart 
