@@ -39,6 +39,8 @@ def main():
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
 
+    # all i'm trying to do is to get the login link from the email
+    # the login link is the text in the first a tag
     try:
         # Call the Gmail API
         service = build('gmail', 'v1', credentials=creds)
