@@ -9,18 +9,44 @@ from quickstart import main
 import os
 from dotenv import load_dotenv
 load_dotenv()
+# delayed task functionality
+from time import sleep
 
-# get the chromedriver running 
-service = Service(executable_path=os.getenv('LOCATION'))
-driver = webdriver.Chrome(service=service)
 
-# go to the link to get the invoices
-driver.get(os.getenv('LINK'))
-driver.implicitly_wait(5)
+# i couldn't get my code to successfully retrieve a login link, so i'll hardcode it
 
-# enter my email
-email = driver.find_element(By.ID, 'email')
-email.send_keys(os.getenv('EMAIL'), Keys.ENTER)
-# after pressing enter, a login link will be sent to my email
+# check if we have a login link
+# otherwise, get the login link
+# if os.getenv("LOGIN_LINK") != "":
+#     login_link = os.getenv('LOGIN_LINK')
+# else:
+    # # get the chromedriver running 
+    # service = Service(executable_path=os.getenv('LOCATION'))
+    # driver = webdriver.Chrome(service=service)
 
-# after a minute, run the email scraping function in quickstart 
+    # # go to the link that will take us to the sign in page
+    # driver.get(os.getenv('LINK'))
+    # driver.implicitly_wait(5)
+
+#     # enter my email
+#     email = driver.find_element(By.ID, 'email')
+#     email.send_keys(os.getenv('EMAIL'), Keys.ENTER)
+#     # after pressing enter, a login link will be sent to my email
+
+#     # after a 60 secs, run the email scraping function in quickstart
+#     sleep(60)
+#     login_link = main()
+#     os.environ["LOGIN_LINK"] = login_link
+
+# print(login_link)
+
+def login():
+    # get the chromedriver running 
+    service = Service(executable_path=os.getenv('LOCATION'))
+    driver = webdriver.Chrome(service=service)
+
+    # go to the login link that will take us to the account page
+    driver.get(os.getenv('LINK'))
+    return driver
+
+driver = login()

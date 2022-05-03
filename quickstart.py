@@ -60,9 +60,12 @@ def main():
             # part 1 is plain text, part 2 is html text
             part1, part2 = message_str.get_payload()
             soup = BeautifulSoup(part2.get_payload(), 'lxml') # we get an html string
-            print(soup.a.text)
+            link = soup.a.text
+            link = link.replace("=", "")
+            # link = link.replace("\n", "")
+            print(link)
         else:
-            print(message_str.get_payload())
+            return message_str.get_payload()
 
     except HttpError as error:
         # TODO(developer) - Handle errors from gmail API.
