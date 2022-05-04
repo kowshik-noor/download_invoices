@@ -40,14 +40,15 @@ from time import sleep
 
 # print(login_link)
 
+
+
 def login():
     # get the chromedriver running 
     service = Service(executable_path=os.getenv('LOCATION'))
-    driver = webdriver.Chrome(service=service)
-
+    driver = webdriver.Chrome(service=service) 
+    
     # go to the login link that will take us to the account page
-    driver.get(os.getenv('LINK'))
-    driver.implicitly_wait(5)
+    driver.get(str(os.getenv('LINK')))
     return driver
 
 driver = login()
